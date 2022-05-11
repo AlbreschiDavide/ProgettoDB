@@ -60,8 +60,10 @@ public class Insert {
             con.close();
 
         } catch(SQLException ex) {
-            System.err.print("SQLException: ");
-            System.err.println(ex.getMessage());
+            System.err.println("-----SQLException-----");
+			System.err.println("SQLState:  " + ex.getSQLState());
+			System.err.println("Message:  " + ex.getMessage());
+			System.err.println("Vendor:  " + ex.getErrorCode());
         }
     }
 }

@@ -3,7 +3,7 @@ import java.sql.*;
 
 
 public class Insert {
-    public static void insert(String query) {
+    public static void InsertRow(String query) {
 
         String url = "jdbc:db2://localhost:50000/palestra";
         Connection con;

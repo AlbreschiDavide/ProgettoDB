@@ -1,4 +1,4 @@
-package Progetto.ProgettoDB.mioProgetto.src.main.java.it.isa.progetto;
+package it.isa.progetto;
 import java.sql.*;
 
 public class Join {

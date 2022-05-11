@@ -5,10 +5,10 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>it.isa.progetto</groupId>
-  <artifactId>esempiPattern</artifactId>
+  <artifactId>mioProgetto</artifactId>
   <version>1.0-SNAPSHOT</version>
 
-  <name>esempiPattern</name>
+  <name>mioProgetto</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
 
@@ -24,6 +24,13 @@
       <artifactId>junit</artifactId>
       <version>4.11</version>
       <scope>test</scope>
+    </dependency>
+    
+    <!-- https://mvnrepository.com/artifact/com.ibm.db2/jcc -->
+    <dependency>
+      <groupId>com.ibm.db2</groupId>
+      <artifactId>jcc</artifactId>
+      <version>11.5.7.0</version>
     </dependency>
   </dependencies>
 

@@ -26,32 +26,32 @@ public class Insert {
             ResultSet uprs = stmt.executeQuery(query);
             uprs.moveToInsertRow();
 
-            uprs.updateString("CF", "VCTRMB99M537P889");
-            uprs.updateString("NOME", "Ciao");
-            uprs.updateString("COGNOME", "TEST");
-            uprs.updateString("DATANASCITA","NULL");
-            uprs.updateString("SESSO","F");
-            uprs.updateString("VIA","Rigone");
-            uprs.updateInt("NUMERO",32); //valore precedente 33
-            uprs.updateString("PAESE", "TEST");
-            uprs.updateString("CODICE", "PAL03");
+            uprs.updateString(1, "VCTRMB99M537P701");
+            uprs.updateString(2, "TEST3");
+            uprs.updateString(3, "TEST3");
+            uprs.updateDate(4,Date.valueOf("2000-08-03"));
+            uprs.updateString(5,"F");
+            uprs.updateString(6,"TEST3");
+            uprs.updateInt(7,32);
+            uprs.updateString(8, "TEST3");
+            uprs.updateString(9, "PAL03");
 
             uprs.insertRow();
             uprs.beforeFirst();
 
             System.out.println("Table CLIENTE after insertion:");
             while (uprs.next()) {
-                String name = uprs.getString("NOME");
-                String id = uprs.getString("CF");
-                String surname = uprs.getString("COGNOME");
-                String date = uprs.getString("DATANASCITA");
-                String sesso = uprs.getString("SALES");
-                String via = uprs.getString("TOTAL");
-                int num =uprs.getInt("NUMERO");
-                String paese=uprs.getString("PAESE");
-                String codice=uprs.getString("CODICE");
+                String id = uprs.getString(1);
+                String name = uprs.getString(2);
+                String surname = uprs.getString(3);
+                Date date = uprs.getDate(4);
+                String sesso = uprs.getString(5);
+                String via = uprs.getString(6);
+                int num = uprs.getInt(7);
+                String paese = uprs.getString(8);
+                String codice = uprs.getString(9);
 
-                System.out.print(id + " " + name + " " + surname+" "+date +" "+ sesso);
+                System.out.print(id + " " + name + " " + surname+" "+date +" "+ sesso +" ");
                 System.out.println(via +" " + num + " "+paese+" "+codice);
                 
             }

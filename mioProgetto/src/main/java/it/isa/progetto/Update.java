@@ -2,7 +2,7 @@ package it.isa.progetto;
 import java.sql.*;
 
 public class Update {
-    public static void update(String query) {
+    public static void UpdateColumn(String query) {
 
 		String url = "jdbc:db2://localhost:50000/palestra";
 		Connection con=null;

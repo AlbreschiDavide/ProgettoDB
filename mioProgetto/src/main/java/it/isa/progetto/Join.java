@@ -1,8 +1,9 @@
 package it.isa.progetto;
 import java.sql.*;
+import java.io.*;
 
 public class Join {
-    public static void join(String query) {
+    public static void JoinTables(String query) {
 		  
 		String url = "jdbc:db2://localhost:50000/palestra";
 
@@ -13,7 +14,10 @@ public class Join {
 		*			   "SUPPLIERS.SUP_ID = COFFEES.SUP_ID";
 		*/			   
 		Statement stmt;
-	
+		String select;
+        String from;
+        String where;
+		
 		try {
 			Class.forName("com.ibm.db2.jcc.DB2Driver");
 
@@ -26,7 +30,22 @@ public class Join {
 			con = DriverManager.getConnection(url,"db2inst1","Spillo_1998");
 	
 			stmt = con.createStatement();							
-	
+			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+			try{
+				System.out.println("Inserire contenuto SELECT: ");
+				String s= br.readLine();
+				select="SELECT "+ s;
+				System.out.println("Inserire contenuto FROM: ");
+				String f= br.readLine();
+				from="FROM "+ f;
+				System.out.println("Inserire contenuto WHERE: ");
+				String w = br.readLine();
+				where="WHERE "+ w;
+				query = select+" "+from+" "+ where+";" ;
+				System.out.println("QUERY RICHIESTA: "+query);
+			}catch(Exception e) {
+				System.out.println(e);
+			}
 			ResultSet rs = stmt.executeQuery(query);
 			System.out.println("Join tra le tabelle richieste:");
 			while (rs.next()) {

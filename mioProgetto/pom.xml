@@ -81,6 +81,7 @@
          <version>3.0.0</version>
          <configuration>
             <mainClass>it.isa.progetto.App</mainClass>
+            <cleanupDaemonThreads>false</cleanupDaemonThreads>
             <!-- <arguments>
               <argument>argument1</argument>
             </arguments> -->

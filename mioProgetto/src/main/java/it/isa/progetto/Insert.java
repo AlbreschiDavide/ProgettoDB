@@ -1,45 +1,43 @@
 package it.isa.progetto;
 import java.sql.*;
+import java.util.Scanner;
 
 
 public class Insert {
-    public static void InsertRow(String query) {
+    public static Connection InsertRow(Connection con) {
 
-        String url = "jdbc:db2://localhost:50000/palestra";
-        Connection con;
         Statement stmt;
 
         try {
-            Class.forName("com.ibm.db2.jcc.DB2Driver");
-
-        } catch(java.lang.ClassNotFoundException e) {
-            System.err.print("ClassNotFoundException: ");
-            System.err.println(e.getMessage());
-        }
-
-        try {
-            con = DriverManager.getConnection(url,"db2inst1","Spillo_1998");
-
             stmt = con.createStatement(
-                ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);							
-
+                ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);	
+            						
+            String query= "SELECT * FROM CLIENTE;";
+            int concurrency= stmt.getResultSetConcurrency();
             ResultSet uprs = stmt.executeQuery(query);
+            System.out.println(concurrency);
             uprs.moveToInsertRow();
-
-            uprs.updateString(1, "VCTRMB99M537P701");
-            uprs.updateString(2, "TEST3");
-            uprs.updateString(3, "TEST3");
-            uprs.updateDate(4,Date.valueOf("2000-08-03"));
+           
+            uprs.updateString(1, "TESTTESTTESTTEST");
+            uprs.updateString(2, "TEST");
+            uprs.updateString(3, "TEST");
+            uprs.updateDate(4,Date.valueOf("2000-08-04"));
             uprs.updateString(5,"F");
-            uprs.updateString(6,"TEST3");
+            uprs.updateString(6,"TEST");
             uprs.updateInt(7,32);
-            uprs.updateString(8, "TEST3");
+            uprs.updateString(8, "TEST");
             uprs.updateString(9, "PAL03");
+                
+            uprs.insertRow(); //inserisco la riga
 
-            uprs.insertRow();
+            con.commit(); //faccio il commit
+
+            uprs.close(); //chiudo il ResultSet 
+            uprs = stmt.executeQuery(query); //riapro il ResultSet ottenendo i risultati aggiornati
+            
+            //muovo il cursore prima della prima riga e mostro i risultati a video
             uprs.beforeFirst();
-
-            System.out.println("Table CLIENTE after insertion:");
+            System.out.println("Tabella CLIENTE dopo l'inserimento: ");
             while (uprs.next()) {
                 String id = uprs.getString(1);
                 String name = uprs.getString(2);
@@ -52,12 +50,11 @@ public class Insert {
                 String codice = uprs.getString(9);
 
                 System.out.print(id + " " + name + " " + surname+" "+date +" "+ sesso +" ");
-                System.out.println(via +" " + num + " "+paese+" "+codice);
+                System.out.println(via +" " + num + " "+paese+" "+ codice);
                 
             }
             uprs.close();
             stmt.close();
-            con.close();
 
         } catch(SQLException ex) {
             System.err.println("-----SQLException-----");
@@ -65,5 +62,6 @@ public class Insert {
 			System.err.println("Message:  " + ex.getMessage());
 			System.err.println("Vendor:  " + ex.getErrorCode());
         }
+        return con;
     }
 }

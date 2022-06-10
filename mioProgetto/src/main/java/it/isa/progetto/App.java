@@ -3,6 +3,7 @@ package it.isa.progetto;
 import it.isa.progetto.Insert;
 import it.isa.progetto.Update;
 import it.isa.progetto.Join;
+import it.isa.progetto.Delete;
 
 import java.util.*;
 import java.sql.*;
@@ -12,51 +13,59 @@ public class App
 {
     public static void main( String[] args )
     {
-        //Database select = new Database();
-        //Database from = new Database();
-        //Database where = new Database();
-        System.out.println("Ciao!");
+        String url = "jdbc:db2://localhost:50000/palestra";
+        Connection con;
+        //Statement stmt;
 
-        String select = "SELECT *";
-        String from = "FROM CLIENTE";
-        String where = "";
-        String query= select+" "+from+" "+ where+";" ;
-        
-		//Database query = new Database();
-        //query.createQuery(select,from,where);
+        try {
+            Class.forName("com.ibm.db2.jcc.DB2Driver");
 
-        //System.out.println("Query: "+ select);
-        //System.out.println("Query: "+ from);
-        //System.out.println("Query: "+ where);
-        //System.out.println("Query: "+ query);
-        
-		System.out.println("Che operazione si vuole eseguire sul DB:\n(Inserire il corrispettivo numero)\n"
+        } catch(java.lang.ClassNotFoundException e) {
+            System.err.print("ClassNotFoundException: ");
+            System.err.println(e.getMessage());
+        }
+        try {
+            System.out.println("Ciao! Benvenuto!");
+            
+           // while(true){
+                con = DriverManager.getConnection(url,"db2inst1","Spillo_1998");
+                System.out.println("Connessione al Database riuscita");
+		    
+                System.out.println("Che operazione si vuole eseguire sul DB:\n(Inserire il corrispettivo numero)\n"
                                 +"1. Insert\n2. Delete\n"
                                 +"3. Update\n4. Join");
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter a number for input: ");
-        try{
-            int num = sc.nextInt();
-            System.out.println(num);
-            switch(num){
+                Scanner sc = new Scanner(System.in);
+                System.out.println("Enter a number for input: ");
+                int num = sc.nextInt();
+            
+                switch(num){
                 case 1:
-                    Insert.InsertRow(query);
+                    Insert.InsertRow(con);
                     break;
                 case 2:
-                    //Delete.(query);
+                    Delete.DeleteRow(con);
                     break;
                 case 3:
-                    Update.UpdateColumn(query);
+                    Update.UpdateColumn(con);
                     break;
                 case 4:
-                    Join.JoinTables(query);
+                    Join.JoinTables(con);
                     break;
                 default:
-                    System.out.println("Non è stato inserito uno dei numeri richiesti...\nTermino...");
+                    System.out.println("Non è stata inserita una delle funzionalità richieste...");
+                    System.out.println("Chiudo la connessione e termino...");
+                    con.close();
                     System.exit(0);
-            }
-        }catch(Exception e) {
-            System.out.println(e);
+                }
+                //System.out.println("\n"); 
+                con.close();     
+            //} 
+        }
+        catch(SQLException ex) {
+        System.err.println("-----SQLException-----");
+        System.err.println("SQLState:  " + ex.getSQLState());
+        System.err.println("Message:  " + ex.getMessage());
+        System.err.println("Vendor:  " + ex.getErrorCode());
         }
     	
     }

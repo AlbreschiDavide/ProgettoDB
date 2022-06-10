@@ -7,19 +7,22 @@ public class Delete {
     public static Connection DeleteRow(Connection con) {
 
         try {
-            //con = DriverManager.getConnection(url,"db2inst1","Spillo_1998");
         
             Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, 
                                         ResultSet.CONCUR_UPDATABLE);
-            
-           
-            System.out.println("Cancelleremo l'ultima riga nella tabella CLIENTE: ");
+
+            System.out.println("Cancelleremo l'ultima riga nella tabella CLIENTE ");
             
             String query= "SELECT * FROM CLIENTE ;";
             ResultSet uprs = stmt.executeQuery(query);
             
             uprs.last(); //identifica la riga da cancellare dal resultset
             uprs.deleteRow(); //cancella la riga dal result set e dal DB
+            
+            uprs.close(); //chiudo il ResultSet 
+            uprs = stmt.executeQuery(query); //riapro il ResultSet ottenendo i risultati aggiornati
+            
+            //muovo il cursore prima della prima riga e mostro i risultati a video
             uprs.beforeFirst();
 
             System.out.println("Tabella CLIENTE dopo la cancellazione: ");

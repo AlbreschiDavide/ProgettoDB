@@ -4,54 +4,43 @@ import java.sql.*;
 public class Update {
     public static void UpdateColumn(Connection con) {
 
-		
 		//Connection con=null;
 		Statement stmt;
-
-		PreparedStatement updateSales;
-
-		String updateString = "update CLIENTE " +
-						"set SESSO = ? where NOME = ?";
-
-		//String updateStatement = "update COFFEES " +
-		//		"set TOTAL = TOTAL + ? where COF_NAME = ?";
-
-		String query = "select SESSO, NOME from CLIENTE";
-
+		PreparedStatement updateStipendio;
+		
+		String query = "select CF, NOME, COGNOME, STIPENDIO from PERSONALE";
+		
+		String updateString = "update PERSONALE " +
+						"set STIPENDIO = ? where NOME = ?";
 		try {
+			updateStipendio = con.prepareStatement(updateString);
 
-			updateSales = con.prepareStatement(updateString);
-			//updateTotal = con.prepareStatement(updateStatement);
-			String [] sesso = {"M"};//{175, 150, 60, 155, 90, 18, 90};
-			String [] nome = {"TEST"};//{"Alex", "Fabio","Nicole", "Rita",
-								//"Sara","Tiziano","Victor"};
+			Integer [] stipendio = {1350, 1200, 1250, 1200, 1100, 1300};
+			String [] nome = {"Anna", "Cristian","Gianfranco", "Sara","Mario","Elena"};
+			
 			int len = nome.length;
 			con.setAutoCommit(false);
 			for (int i = 0; i < len; i++) {
-				updateSales.setString(1, sesso[i]);
-				updateSales.setString(2, nome[i]);
-				updateSales.executeUpdate();
+				updateStipendio.setInt(1, stipendio[i]);
+				updateStipendio.setString(2, nome[i]);
+				updateStipendio.executeUpdate();
 
-				//updateTotal.setInt(1, salesForWeek[i]);
-				//updateTotal.setString(2, coffees[i]);
-				//updateTotal.executeUpdate();
 				con.commit();
 			}
-
 			con.setAutoCommit(true);
 
-			updateSales.close();
-			//updateTotal.close();
+			updateStipendio.close();
 
 			stmt = con.createStatement();
-			System.out.println("Query che eseguiremo: \nUPDATE CLIENTE set SESSO = ? where NOME = ?;");
+			//System.out.println("Query che eseguiremo: \n UPDATE PERSONALE set STIPENDIO = ? where NOME = ?");
 			ResultSet rs = stmt.executeQuery(query);
 			System.out.println("Risultato della query:");
 			while (rs.next()) {
+				String cf=rs.getString("CF");
 				String n = rs.getString("NOME");
-				String s = rs.getString("SESSO");
-				//int t = rs.getInt("TOTAL");
-				System.out.println(n + " " +  s + " ");
+				String c=rs.getString("COGNOME");
+				String s = rs.getString("STIPENDIO");
+				System.out.println(cf +" "+ n +" "+ c +" "+ s +" ");
 			}
 			stmt.close();
 			con.close();

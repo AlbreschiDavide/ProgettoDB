@@ -18,14 +18,14 @@ public class Insert {
             System.out.println(concurrency);
             uprs.moveToInsertRow();
            
-            uprs.updateString(1, "TESTTESTTESTTEST");
-            uprs.updateString(2, "TEST");
-            uprs.updateString(3, "TEST");
-            uprs.updateDate(4,Date.valueOf("2000-08-04"));
-            uprs.updateString(5,"F");
-            uprs.updateString(6,"TEST");
+            uprs.updateString(1, "GVNRSS00M385N176");
+            uprs.updateString(2, "Giovanni");
+            uprs.updateString(3, "Rossi");
+            uprs.updateDate(4,Date.valueOf("2000-07-04"));
+            uprs.updateString(5,"M");
+            uprs.updateString(6,"Ugo Bassi");
             uprs.updateInt(7,32);
-            uprs.updateString(8, "TEST");
+            uprs.updateString(8, "Cento");
             uprs.updateString(9, "PAL03");
                 
             uprs.insertRow(); //inserisco la riga
